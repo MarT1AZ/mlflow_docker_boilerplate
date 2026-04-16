@@ -1,0 +1,25 @@
+version: "1.0"
+services:
+  mlflow-server-con:
+    build: ./mlflow-server
+    ports:
+      - 5000:5000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - mlops
+    volumes:
+      - ./mlflow-server/ml-log:/ml-log
+
+  ml-trainer-con:
+    build: ./ml-trainer
+    networks:
+      - mlops
+    volumes:
+      - ./ml-trainer/ml-utils:/mlops
+    depends_on:
+      - mlflow-server-con
+
+networks:
+  mlops:
+    driver: bridge
