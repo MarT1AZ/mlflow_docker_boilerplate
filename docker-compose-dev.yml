@@ -12,7 +12,9 @@ services:
       - ./mlflow-server/ml-log:/ml-log
 
   ml-trainer-con:
-    build: ./ml-trainer
+    build: 
+      context: ./ml-trainer
+      dockerfile: dockerfile.dev
     networks:
       - mlops
     volumes:
